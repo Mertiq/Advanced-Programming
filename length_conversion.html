@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+    <title> Length Conversion </title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+
+inch 
+<input type=number id=inch value=0 onChange="OnChangeInch()">
+cm 
+<input type=number id=cm value=0 onChange="OnChangeCm()">
+
+<script>
+"use strict";
+// JavaScript comment
+function OnChangeInch() {
+  let x = Number(inch.value) * 2.54;
+  cm.value = x.toFixed(1);
+}
+
+function OnChangeCm(){
+  let x = Number(cm.value) / 2.54;
+  inch.value = x.toFixed(1);
+}
+    
+</script>
+
+</body>
+</html>
