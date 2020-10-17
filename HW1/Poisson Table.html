@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+
+    <p>HW#1 -- Poisson Table</p>
+
+    <script>
+        const L = [0.5, 1, 1.5, 2, 2.5, 3]
+        const p=[];
+        var a = 8;
+        var b = 6;
+        document.write("<table border='1'>");
+        document.write("<tr>");
+        document.write("<td>" + "" + " </td>");
+            for (let x of L) {
+            document.write("<td> λ= " + x + " </td>");
+        }
+        document.write("</tr>");
+        document.write("<tr>");
+        document.write("<td> x = " + 0 + " </td>");
+        for (let λ of L) {
+            p.push(Math.exp(-λ))
+            document.write("<td>" + Math.exp(-λ).toFixed(4)+ " </td>");
+        }
+        document.write("</tr>");
+        document.write("<tr>");
+        for (var i = 1; i <= a; i++) {
+            document.write("<td> x = " + i + " </td>");
+            for (var j = 0; j < L.length; j++) {
+                p[j] = (p[j] * L[j]) / i
+                document.write("<td>" + p[j].toFixed(4)+ " </td>");
+            }
+            document.write("</tr>");
+        }
+        document.write("</table>");
+    </script>
+
+</body>
