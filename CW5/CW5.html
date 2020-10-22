@@ -23,12 +23,21 @@
 <button onclick="questionOne()" >Question 1</button>
 <textarea id = "txt"></textarea>
 <br><br>
+<h1>Map part</h1>
+input
+<input type="text" id = "maptext" onchange="getActivities(value)"></input>
+<br><br>
+output
+<textarea id = "output"></textarea>
+<br><br>
  <h1> Inch to Cm Converter</h1>
-    <br><br>
+    <br>
 inch 
 <input type=number id=inch value=0 onChange="OnChangeInch()">
 cm 
 <input type=number id=cm value=0 onChange="OnChangeCm()">
+
+
 
 <link  href="https://maeyler.github.io/JS/sss/inspector.css" rel="stylesheet">
 <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
@@ -97,7 +106,38 @@ function OnChangeCm(){
   inch.value = t.inch;
 }
 
+  function _Map(value) {
 
+    let mapData = new Map()
+
+    let a = 0
+    for (let x of JOURNAL) {
+      for (let y of x.events) {
+        if (y == value) {
+          mapData.set(x.events, a)
+          a++
+          break
+        }
+      }
+    }
+
+    return mapData
+
+  }
+
+    function getActivities(value) {
+      let w = _Map("weekend")
+      let a = 0
+      w.forEach((values, keys) => {
+        for(let x of keys){
+          if(x == value){
+            a++
+          }
+        }
+      })
+      console.log(a)
+      output.innerText = a
+    }
 
 var a, b, c, d, s;  //global variables
 function init() {
