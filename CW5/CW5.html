@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="icon" href="../images/icon192.png">
     <title>Inspector </title>
 
     <style>
@@ -23,13 +22,15 @@
 
 <button onclick="questionOne()" >Question 1</button>
 <textarea id = "txt"></textarea>
+<br><br>
+inch 
+<input type=number id=inch value=0 onChange="OnChangeInch()">
+cm 
+<input type=number id=cm value=0 onChange="OnChangeCm()">
 
 <link  href="https://maeyler.github.io/JS/sss/inspector.css" rel="stylesheet">
 <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
 <script src="chap4.js"></script>
-<script src="chap6.js"></script>
-<script src="../exam/Quiz.js"></script>
-<script src="Async.js"></script>
 <script>
 "use strict";
 class Chap4 extends Menu {
@@ -60,6 +61,42 @@ function questionOne (){
   }
 }
 
+class Converter {
+  constructor(cm=0) {
+    this.cm = cm.toFixed(2);
+  }
+  get inch() {
+    let x = this.cm * 2.54;
+    return x.toFixed(2);
+  }
+  set inch(value=0) {
+    let x = value / 2.54
+    this.cm = x.toFixed(2);
+  }
+  toString() {
+    return this.cm+ " cm"
+  }
+  static fromInch(value) {
+    let t = new Temperature();
+    t.inch = value;
+    return t;
+  }
+}
+
+function OnChangeInch() {
+  let x = Number(inch.value)
+  let t = new Converter()
+  t.inch = x;
+  cm.value = t.cm
+}
+
+function OnChangeCm(){
+  let t = new Converter(Number(cm.value))
+  inch.value = t.inch;
+}
+
+
+
 var a, b, c, d, s;  //global variables
 function init() {
     let len = 123, name = "Circle", pi = Math.PI
@@ -72,9 +109,6 @@ function init() {
     Object.setPrototypeOf(MENU, Menu.prototype)
     display(MENU); 
     display(new Chap4());
-    display(new Chap6());
-    display(new Quiz());
-    display(new Async());
     display(MENU); 
 }
     docName.innerText = "Inspector "+VERSION;
