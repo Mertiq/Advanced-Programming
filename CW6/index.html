@@ -40,8 +40,7 @@
 // JavaScript comment
 function check() {
     fetch(url.value).then(r =>
-    if(r.ok)
-        resp.innerText = "OK"
+    resp.innerText = "OK"
     ).catch(e => resp.innerText = e)
 }
 function init() {
