@@ -15,7 +15,7 @@
 <p><b id=docName></b> &nbsp; <a href="Reading_files">Reference</a>
 </p>
 <p>Remote file <br>
-  <input type=text id=remote size=35 value="../images/objects.png">
+  <input type=text id=remote size=35 value="https://mertiq.github.io/Advanced-Programming/CW8/objects.png">
 </p>
 <p><input type=file id=local multiple onChange='fileSelect()' /></p>  
 <pre id=out></pre>
@@ -30,21 +30,23 @@ function fileSelect() {
     .then(checkFiles) //called with Blob b
 }
 function checkFiles(b) {
-    let a = [...local.files]
-    console.log(a);
-    let equals = "";
-    for (let f of a) {
-        if(b.type == f.type || f.size == b.size){
-            console.log("Eşit bulundu");
-            equals += f
+    let files = [...local.files]
+    let ayniMi = false
+    let dosyaAdi = ""
+    for(let file of files){
+        out.innerText +=file.name + ","
+        if(b.size == file.size && b.type == file.type){
+            ayniMi = true;
+            dosyaAdi = file.name;
         }
     }
-    if(equals == ""){
-        out.innerText += 'Result :'+a.length+" items checked all files are different"
+    let a = remote.value.split("/");
+    if(ayniMi){
+        out.innerText += "\n"+ a[a.length-1] + " is the same as " + dosyaAdi + "\n"
+    }else{
+        out.innerText = "all files are diffrent"
     }
-    else{
-        out.innerText += 'Result :'+a.length+" items checked "+equals+" is the same as"+b
-    }
+
 }
 const L = console.log
 docName.innerText = document.title
