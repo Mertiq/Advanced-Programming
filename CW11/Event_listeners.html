@@ -52,8 +52,8 @@ function init(){
     b.onlevelchange = () => level.innerText = 100*b.level+"%"
   ) 
   
-  ononline = () => online.innerText = "online"
-  onoffline = () => online.innerText = "offline"
+  ononline = () => online.innerText = navigator.onLine ? "connected -- online" : "disconnected -- offline";
+  onoffline = () => online.innerText = navigator.onLine ? "connected -- online" : "disconnected -- offline";
 
   onkeydown = (event) => key.innerText = "key down = " +event.key
   onkeyup = (event) => key.innerText = "key up = " + event.key
