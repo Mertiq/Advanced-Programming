@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="/305/images/icon192.png">
+    <title>Battery Status</title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+    #url { width: 190px; }
+    span, #url { color: blue; }
+    
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+
+<h2 id=title title="Modify xxx"></h2>
+
+<h3>Battery Status</h3>
+<p>
+  Battery is charging?  <span id=charging></span>
+</p>
+<p>
+  Battery level = <span id=level></span>
+</p>
+<h3>Online Status</h3>
+<p>
+  Online Status = <span id=online></span>
+</p>
+<h3>Keyboard</h3>
+<p>
+  <span id=key></span>
+</p>
+<hr />
+<b>Sample code</b>
+<pre id=sample>This text is not shown. Why?</pre>
+
+<hr />
+
+<script>
+"use strict";
+// JavaScript comment
+function init(){
+  navigator.getBattery().then(b => 
+      b.onchargingchange = () => charging.innerText =
+       (b.charging ? "Yes" : "No")
+  )  
+  
+  navigator.getBattery().then(b => 
+    b.onlevelchange = () => level.innerText = 100*b.level+"%"
+  ) 
+  
+  ononline = () => online.innerText = "online"
+  onoffline = () => online.innerText = "offline"
+
+  onkeydown = (event) => key.innerText = "key down = " +event.key
+  onkeyup = (event) => key.innerText = "key up = " + event.key
+
+}
+  
+ init()
+ sample.innerText = init.toString()
+</script>
+
+</body>
+</html>
