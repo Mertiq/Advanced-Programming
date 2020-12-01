@@ -1,0 +1,74 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+
+<script>
+"use strict";
+function elt(type, ...list) {
+  let e = document.createElement(type)
+  for (let c of list) {
+    e.appendChild(c instanceof Element? c
+             : document.createTextNode(c))
+  }
+  return e
+}
+
+const TITLE = "Counter",
+  BOOK_REF = "https://www.w3schools.com/js/"
+
+
+function makePage() {
+  let bold = elt("b", "Sample code")
+  let link = elt("a", "JS Tutorial")
+  let initial =  elt("p", "Initial")
+  let pre  = elt("pre", makePage)
+  let input = elt("input")
+  input.id = "inp"
+  input.type="number"
+  input.value = 0
+  input.onchange = changeOut
+  let btn = elt("button", "+")
+  btn.onclick=increment
+  let output = elt("p")
+  output.id = "out"
+  output.innerText = 0
+  let div = elt("div", initial, input, btn, output)
+  link.href = BOOK_REF
+  document.title = TITLE
+  document.body = elt("body", 
+      elt("h2", TITLE),
+      elt("div", div),
+      elt("hr"),
+      elt("div", bold, pre),
+      elt("hr"), 
+      elt("div", "Ref: ", link),
+      elt("hr")
+    )
+  document.body.style.maxWidth = "420px"
+}
+const tree = [], SPACE = '&emsp;', MAX = 26;
+function toTree(e, space) {
+  let c = e.firstChild
+  if (!c || c instanceof Element) c = ''
+  else c = SPACE+c.textContent
+  if (c.length>MAX+3) c = c.substring(0, MAX)+'…'
+  console.log(space.length, e.localName, c)
+  tree.push(space+'+ '+e.tagName+c)
+  for (let c of e.children)
+      toTree(c, space+SPACE)
+}
+makePage(); toTree(document.body, '');
+let t = elt("p"); t.style.color = "green";
+t.innerHTML = tree.join('<br>');
+document.body.append(t);
+
+function increment() {
+  document.getElementById("out").innerText = Number(document.getElementById("out").innerText)+1
+}
+
+function changeOut(){
+  document.getElementById("out").innerText = Number(document.getElementById("inp").value)
+}
+increment()
+</script>
+<!-- The document body is made by the script above -->
