@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" sizes="192x192" href="/JS/images/JS.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+    <title>GitHub Users</title>
+
+  <style>
+    body {
+        max-width: 440px;
+    }
+    img {
+        padding-right: 12px; 
+        width: 440px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2 id=title></h2>
+<input type=text id=usr value=mertiq onChange="readUser()">
+<p id=photo></p>
+<p id=fullname style="font-size: 30px; font-weight: bolder;"></p>
+<p id=nickname></p>
+<div>
+<i class="fa fa-users" aria-hidden="true"></i><span id=company></span>
+</div>
+<div>
+<i class="fa fa-map-marker" aria-hidden="true"></i><span id=location></span>
+</div>
+<div>
+<i class="fa fa-envelope-o" aria-hidden="true"></i><span id=email></span>
+</div>
+<div>
+<i class="fa fa-link" aria-hidden="true"></i><a id=blog></a>
+</div>
+
+
+<pre id=sample></pre>
+<hr />
+<p>Ref: <a href="https://developer.github.com/v3/#rate-limiting" 
+   target=NewTab>GitHub Developer</a>
+</p>
+
+<script>
+"use strict";
+const NL = "\n", BR = "<BR>", 
+    URL = "https://api.github.com/users/"
+function error(t) {
+    //out.style.color = 'red'
+    //out.innerText = t; console.log(t)
+}
+function listRepos(b) {
+    if (b.length) 
+      out.innerHTML += 
+        b.map(x => x.name).join(", ")
+}
+function userData(u) {
+    if (!u || !u.login) {
+      error(usr.value+' not found')
+      return
+    } 
+    photo.innerHTML = ''
+    let i = document.createElement("img")
+    i.src = u.avatar_url
+    i.align = "left"
+
+    photo.appendChild(i)
+    fullname.innerText = u.name
+    nickname.innerText = u.login
+    company.innerText = u.company;
+    document.querySelector("#location").innerText = u.location
+    if(u.email == null){
+        email.innerText = "  mail bulunamadı"
+    }else{
+        email.innerText = u.email
+    }
+
+    blog.innerText = u.blog
+    blog.href = u.blog
+    blog.target = "_blank"
+
+}
+function readUser() {
+    fetch(URL+usr.value)
+      .then(r => r.ok? r.json() : null) 
+      .then(u => {
+        userData(u)
+      }).catch(error)
+}
+
+    title.innerText = document.title
+    //out.innerText = "Reading data"
+    readUser()
+</script>
+
+</body>
+</html>
