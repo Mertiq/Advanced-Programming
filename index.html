@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <head>
+    <link rel="icon" sizes="192x192" href="images/icon192.png">
+    <link rel="manifest" href="manifest.json">
+    
     <style>
         th {background-color: black; color: red; }
         a{text-decoration: none; color: inherit;}
         td{background-color: black; color: aqua;}
     </style>
+    
 </head>
 <body>
 
@@ -227,6 +231,10 @@
             </td>
         </tr>
     </table>
+    
+    <script>
+    navigator.serviceWorker.register('/sw.js')
+    </script>
 
 </body>
 
