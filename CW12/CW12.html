@@ -73,11 +73,7 @@ function userData(u) {
     photo.appendChild(i)
     fullname.innerText = u.name
     nickname.innerText = u.login
-    if(u.company == null){
-        company.innerText =  = "  company bulunamadı"
-    }else{
-        company.innerText = u.company;
-    }
+    company.innerText = u.company;
     document.querySelector("#location").innerText = u.location
     if(u.email == null){
         email.innerText = "  mail bulunamadı"
