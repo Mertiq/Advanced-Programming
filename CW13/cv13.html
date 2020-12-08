@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="../images/icon192.png">
+  <title>Open Weather</title>
+  <style>
+    body {
+        max-width: 420px;
+        margin: 0;
+    }
+    div {
+        display: inline-block;
+        margin: 12px;
+        vertical-align: top;
+    }
+    p { margin: 0; }
+    b { font-size: 18px; }
+    pre { font-size: 14px; }
+    .dar { width: 42%; }
+    #main {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 20px;
+        text-align: center;    
+        background: #9cf;
+        font-size: 24px;
+        margin: 0;
+    }
+    #yer { margin: 10px; }
+    #err { color:red }
+  </style>
+</head>
+
+<body>
+    <div>
+        Location 
+        <input type="number" id="lat" placeholder="" style="width: 100px;height: 30px;" value="39.7535979">
+        <input type="number" id="lon" placeholder="" style="width: 100px;height: 30px;" value="46.7441101">
+        <button onclick="askWeather()"> Ask Weather </button>
+    </div>
+<div id=main>
+<p id=yer>location</p>
+<p><img id=icon>
+<span id=hava>weather</span></p>
+</div>
+
+<div class=dar>
+  <b>Detail</b>
+  <pre id=detay>detail</pre>
+</div>
+<div class=dar>
+  <b>Sun</b>
+  <pre id=gunes>sunrise</pre>
+</div>
+<hr />
+<div>
+<p id=err>You need an API key for openweathermap.org 
+  <a href="https://openweathermap.org/appid" 
+   target="NewTab">here</a> 
+</p>
+<p id=refs>Ref: 
+  <a href="http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/ajax-forms/js-http.html" 
+   target="NewTab">openweathermap example</a> (old)<br>
+</p>
+<p><i>Bu eski yöntem, 2015'ten beri fetch() kullanıyoruz</i>
+</p>
+</div>
+
+<script>
+"use strict";
+function toHM(t, round) {
+    let d = t ? new Date(t*1000) : new Date()
+    if (round && d.getSeconds()>29)
+        d = new Date((t+30)*1000) //round
+    let h = d.getHours()
+    let m = d.getMinutes()
+    let twoDigits = t => (t>9? '' : '0')+t
+    return twoDigits(h)+":"+twoDigits(m)
+}
+async function toJSON(url) {
+    let r = await fetch(url)
+    if (!r.ok) error(r.statusText)
+    return r.json()
+}
+// Location
+var lat, lon;  //global values
+async function askLocation() {
+    let name = 'geolocation'
+    let result = await navigator.permissions.query({name})
+    if (result.state == 'denied') {
+        let url = "https://ipinfo.io/json"
+        toJSON(url).then(getLocation2, error)
+    } else  {
+        navigator.geolocation
+        .getCurrentPosition(getLocation1, error);
+    }
+}
+function getLocation2(p) { //Approximate
+    console.log("ipinfo.io", p.city)
+    let [x, y] = p.loc.split(',')
+    lat = Number(x); lon = Number(y); 
+    askWeather()
+}
+function getLocation1(p) { //Accurate
+    console.log("getCurrentPosition")
+    lat = p.coords.latitude; lon = p.coords.longitude;
+    askWeather()
+}
+// Weather
+var accessKey;
+async function askWeather() {
+    lat = document.querySelector("#lat").value
+    lon = document.querySelector("#lon").value
+    
+    const U = "https://api.openweathermap.org/data/2.5/weather?"
+    let url = U+"lat="+lat+"&lon="+lon+"&APPID="+accessKey;
+    hava.innerText = "getting weather"
+    detay.innerText = ''
+    gunes.innerText = ''
+   let data = await toJSON(url)
+    showWeather(data)
+ }
+ function showWeather(data) {
+    let w = data.weather[0]; showIcon(w.icon)
+    let celsius = convert(data.main.temp).toFixed(0)
+    let hh = w.main+"  "+celsius+"°", {sys} = data
+    let yy = data.name+', '+sys.country
+    hava.innerText = hh; yer.innerText = yy
+    console.log(hh, yy); console.log(sys)
+    lat = data.coord.lat; lon = data.coord.lon
+    let loc = "["+lat.toFixed(2)+", "+lon.toFixed(2)+"]"
+    detay.innerText = hh+'\n'+yy+'\n'+loc
+        +'\nLat ' + lat 
+        +'\nLon ' + lon
+        +'\nWind  '+data.wind.speed * 3.6+' kph'
+        +'\nWind Direction ' + data.wind.deg
+        +'\nPressure '+data.main.pressure+' hpa'
+        +'\nHumidity '+data.main.humidity+'%'
+    let {sunrise, sunset} = sys, noon = (sunrise+sunset)/2
+    gunes.innerText = 'Rise '+toHM(sunrise, 1)
+        +'\nNoon '+toHM(noon, 1)+'\nSet  '+toHM(sunset, 1)
+}
+function showIcon(i) {
+    const URL = "https://openweathermap.org/img/w/"
+    icon.src = URL+i+".png"
+    document.querySelector('link').href = icon.src
+}
+function convert(kelvin){
+    return (kelvin - 273.15);
+    //return celsius*1.8 + 32
+}
+// Interaction
+function askUser() {
+    let k = prompt('Please enter openweather key:')
+    if (!k) error('You need an API key')
+    return k
+}
+function error(e) {
+    main.style.display = "none"; //hide
+    //refs.style.display = "none";
+    err.style.display = ''; //show
+    throw e
+}
+function getAPIkey() {
+    if (origin.startsWith('http') && localStorage) {
+        if (!localStorage.keys) localStorage.keys = '{}'
+        let keys = JSON.parse(localStorage.keys)
+        if (!keys.openweather) {
+           keys.openweather = askUser()
+           localStorage.keys = JSON.stringify(keys)
+        }
+        accessKey = keys.openweather
+    } else { //cannot use localStorage
+        accessKey = askUser()
+    }
+}
+    err.style.display = "none"
+    getAPIkey(); askLocation()
+</script>
+
+</body>
+</html>
