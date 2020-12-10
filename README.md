@@ -13,8 +13,8 @@
 * [CW#9](https://mertiq.github.io/Advanced-Programming/CW09/index.html)
 * [CW#10](https://mertiq.github.io/Advanced-Programming/CW10/cw10.html)
 * [CW#11](https://mertiq.github.io/Advanced-Programming/CW11/Event_listeners.html)
-* [CW#12]
-* [CW#13]
+* [CW#12](https://mertiq.github.io/Advanced-Programming/CW12/CW12.html)
+* [CW#13](https://mertiq.github.io/Advanced-Programming/CW13/cv13.html)
 * [CW#14]
 * [CW#15]
 
@@ -22,7 +22,7 @@
 
 * [HW#1 -- Poisson Table](https://mertiq.github.io/Advanced-Programming/HW1/Poisson%20Table.html)
 * [HW#2 -- Database and timing](https://mertiq.github.io/Advanced-Programming/HW2/hw2.html)
-* [HW#3 -- Git and Animation]
+* [HW#3 -- Git and Animation](https://mertiq.github.io/305/anim/Animation)
 
 ### Project
 
