@@ -1,3 +1,5 @@
+
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -202,8 +204,7 @@ function init() {
     let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     let attribution = '&copy; OpenStreetMap contributors'
     L.tileLayer(u, {attribution}).addTo(MAP)
-  L.marker(p.lat,p.lng).addTo(MAP)
-        .bindPopup("").openPopup();
+
     let report = () => out.innerText = MAP.getZoom()
     MAP.on('zoom', report); report()
     MAP.on('click', e => {
@@ -214,8 +215,6 @@ function init() {
 
     MAP = MAP.setView(p, 10)  //setZoom(10)
 
-  L.marker(p.lat,p.lng).addTo(MAP)
-        .bindPopup("").openPopup();
     askWeather()
     console.log(e.latlng)
 
@@ -248,8 +247,7 @@ function setLoc(lat,lon) {
     let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     let attribution = '&copy; OpenStreetMap contributors'
     L.tileLayer(u, {attribution}).addTo(MAP)
-  L.marker(p.lat,p.lng).addTo(MAP)
-        .bindPopup("").openPopup();
+
 }
 
     err.style.display = "none"
