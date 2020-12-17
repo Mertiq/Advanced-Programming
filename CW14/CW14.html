@@ -247,6 +247,8 @@ function setLoc(lat,lon) {
     let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     let attribution = '&copy; OpenStreetMap contributors'
     L.tileLayer(u, {attribution}).addTo(MAP)
+  L.marker(p.lat,p.lng).addTo(MAP)
+        .bindPopup("").openPopup();
 }
 
     err.style.display = "none"
