@@ -14,7 +14,7 @@
 * [CW#10](https://mertiq.github.io/Advanced-Programming/CW10/cw10.html)
 * [CW#11](https://mertiq.github.io/Advanced-Programming/CW11/Event_listeners.html)
 * [CW#12](https://mertiq.github.io/Advanced-Programming/CW12/CW12.html)
-* [CW#13]((https://mertiq.github.io/Advanced-Programming/CW14/CW14.html)
+* [CW#13](https://mertiq.github.io/Advanced-Programming/CW14/CW14.html)
 * [CW#14](https://mertiq.github.io/Advanced-Programming/CW14/CW14.html)
 * [CW#15]
 
