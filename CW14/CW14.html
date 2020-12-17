@@ -214,7 +214,8 @@ function init() {
 
     MAP = MAP.setView(p, 10)  //setZoom(10)
 
-
+  L.marker(p.lat,p.lng).addTo(MAP)
+        .bindPopup("").openPopup();
     askWeather()
     console.log(e.latlng)
 
