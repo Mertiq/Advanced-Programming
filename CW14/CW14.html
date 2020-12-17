@@ -202,6 +202,8 @@ function init() {
     let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     let attribution = '&copy; OpenStreetMap contributors'
     L.tileLayer(u, {attribution}).addTo(MAP)
+  L.marker(p.lat,p.lng).addTo(MAP)
+        .bindPopup("").openPopup();
     let report = () => out.innerText = MAP.getZoom()
     MAP.on('zoom', report); report()
     MAP.on('click', e => {
