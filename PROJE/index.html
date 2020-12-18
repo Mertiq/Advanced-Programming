@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<head>
+</head>
+
+<body>
+    <div class="middle">
+        <div class="upper">
+
+            <input type="number" id="repeatCount" style="width:143px;height:44px;" value=1>
+            <select id="changeornot" style="width:149px;height:50px;" value="change">
+
+                <option>CHANGE</option>
+
+                <option>NOT CHANGE</option>
+
+            </select>
+            <button id="simulateButton" style="width:150px;height:50px;" onclick="Simulate()">
+                Simulate
+            </button>
+
+        </div>
+
+        <div class="doors">
+
+            <img id="door1" style="width:150px;height:250px;" src="Photos/door.png">
+            <img id="door2" style="width:150px;height:250px;" src="Photos/door.png">
+            <img id="door3" style="width:150px;height:250px;" src="Photos/door.png">
+
+        </div>
+
+
+
+        <div class="bottom">
+            <input type="text" id="change_or_not_ask" style="width:450px;height:50px;" readonly>
+        </div>
+
+        <div class="bottom">
+
+            <input type="text" id="winlosetext" style="width:140px;height:70px;" readonly>
+            <button id="replayButton" style="width:150px;height:75px;" onclick="Replay()">
+                Replay
+            </button>
+            <button id="resetButton" style="width:150px;height:75px;" onclick="resetStats()">
+                Reset
+            </button>
+
+        </div>
+
+        <div class="stats">
+
+            <table>
+
+                <tr>
+                    <td> STATS </td>
+                    <td> WIN </td>
+                    <td> LOSE </td>
+                </tr>
+
+                <tr>
+                    <td> CHANGE </td>
+                    <td id="changeWin"> </td>
+                    <td id="changeLose"> </td>
+                </tr>
+
+                <tr>
+                    <td> NOT CHANGE </td>
+                    <td id="notchangeWin"> </td>
+                    <td id="notchangeLose"> </td>
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+
+    <script>
+
+        let doorWithCar;
+        let isFirstChoice;
+        let isSecondChoice;
+        let firstOpenedDoor;
+        let firsChosenDoor;
+        let secondChosenDoor;
+        let simulating = false
+
+
+
+
+        class Stats {
+
+            constructor(changeWin, changeLose, notchangeWin, notchangeLose) {
+                this.changeWin = changeWin
+                this.changeLose = changeLose
+                this.notchangeWin = notchangeWin
+                this.notchangeLose = notchangeLose
+            }
+        }
+
+        createStorage()
+
+        function resetStats() {
+
+            var stat = new Stats(0, 0, 0, 0)
+            localStorage.setItem("stats", JSON.stringify(stat))
+            UpdateStats()
+        }
+
+        function changeStats(changeValue) {
+
+            let stats = getStorage()
+
+            if (changeValue === 'changeWin') {
+
+                stats.changeWin++
+
+            } else if (changeValue === 'changeLose') {
+
+                stats.changeLose++
+
+            } else if (changeValue === 'notchangeWin') {
+
+                stats.notchangeWin++
+
+            } else if (changeValue === 'notchangeLose') {
+
+                stats.notchangeLose++
+            }
+
+            setStorage(stats)
+        }
+
+
+        function createStorage() {
+
+            let stats = getStorage()
+
+            if (stats.length == 0) {
+
+                var stat = new Stats(0, 0, 0, 0)
+                localStorage.setItem("stats", JSON.stringify(stat))
+
+            }
+        }
+
+        function setStorage(stats) {
+
+            localStorage.setItem("stats", JSON.stringify(stats))
+
+        }
+
+        function getStorage() {
+
+            let stats = []
+
+            if (localStorage.getItem("stats") !== null) {
+
+                stats = JSON.parse(localStorage.getItem("stats"))
+
+            }
+
+            return stats
+
+        }
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
+            }
+
+        function Simulate() {
+            let count = parseInt(document.getElementById("repeatCount").value)
+            let ischange = document.getElementById("changeornot").value
+
+            for (let i = 0; i < count; i++) {
+
+                var doors = ["door1", "door2", "door3"];
+                CreateGame()
+                let x = Math.floor(Math.random() * 3) + 1;
+                firsChosenDoor = FirstChoice("door" + x)
+                let index = doors.indexOf("door" + x)
+                doors.splice(index, 1);
+                if (ischange == "CHANGE") {
+                    let index = doors.indexOf(firstOpenedDoor)
+                    doors.splice(index, 1);
+                    secondChosenDoor = SeconChoice(doors[0])
+                    CheckWin(secondChosenDoor)
+                }
+                else {
+                    secondChosenDoor = SeconChoice(firsChosenDoor)
+                    CheckWin(secondChosenDoor)
+                }
+            }
+        }
+
+        function CreateGame() {
+            for (var i = 1; i < 4; i++) {
+                Show("door" + i)
+            }
+            var x1 = Math.floor(Math.random() * 3) + 1;
+            var x2 = Math.floor(Math.random() * 3) + 1;
+            var x3 = Math.floor(Math.random() * 3) + 1;
+            var x4 = Math.floor(Math.random() * 3) + 1;
+            var x5 = Math.floor(Math.random() * 3) + 1;
+            var x = x1 + x2 + x3 + x4 + x5;
+            doorWithCar = (x % 3) + 1;
+            isFirstChoice = true;
+            isSecondChoice = false;
+            document.getElementById("winlosetext").value = "";
+            document.getElementById("change_or_not_ask").value = "";
+            UpdateStats()
+        }
+
+        function FirstChoice(door) {
+            if (door == "door1") {
+                if (doorWithCar == 1) {
+                    firstOpenedDoor = "door3"
+                }
+                else {
+                    if (doorWithCar == 2) {
+                        firstOpenedDoor = "door3"
+                    }
+                    else {
+                        firstOpenedDoor = "door2"
+                    }
+                }
+            }
+            if (door == "door2") {
+                if (doorWithCar == 2) {
+                    firstOpenedDoor = "door1"
+                }
+                else {
+                    if (doorWithCar == 1) {
+                        firstOpenedDoor = "door3"
+                    }
+                    else {
+                        firstOpenedDoor = "door1"
+                    }
+                }
+            }
+            if (door == "door3") {
+                if (doorWithCar == 3) {
+                    firstOpenedDoor = "door2"
+                }
+                else {
+                    if (doorWithCar == 1) {
+                        firstOpenedDoor = "door2"
+                    }
+                    else {
+                        firstOpenedDoor = "door1"
+                    }
+                }
+            }
+            Hide(firstOpenedDoor)
+            document.getElementById("change_or_not_ask").value = "Do you want to change your choice?";
+            return door;
+        }
+
+        function SeconChoice(door) {
+            Hide("door1")
+            Hide("door2")
+            Hide("door3")
+            return door;
+        }
+
+        function CheckWin(door) {
+            let x = "door" + doorWithCar
+            if (door == x) {
+                document.getElementById("winlosetext").value = "YOU WIN!";
+                if (firsChosenDoor == secondChosenDoor) {
+                    changeStats("notchangeWin")
+                    document.getElementById("change_or_not_ask").value = "You did not changed your choice!";
+                }
+                else if (firsChosenDoor != secondChosenDoor) {
+                    changeStats("changeWin")
+                    document.getElementById("change_or_not_ask").value = "You changed your choice!";
+                }
+            }
+            else {
+                document.getElementById("winlosetext").value = "YOU LOSE!";
+                if (firsChosenDoor == secondChosenDoor) {
+                    changeStats("notchangeLose")
+                    document.getElementById("change_or_not_ask").value = "You did not changed your choice!";
+                }
+                else if (firsChosenDoor != secondChosenDoor) {
+                    changeStats("changeLose")
+                    document.getElementById("change_or_not_ask").value = "You changed your choice!";
+                }
+            }
+            UpdateStats()
+        }
+
+        function getMouseClickedPosition(event) {
+            if (event.clientX < 160 && event.clientX > 10 && event.clientY < 300 && event.clientY > 60) {
+                if (isFirstChoice) {
+                    firsChosenDoor = FirstChoice("door1")
+                    isFirstChoice = false
+                    isSecondChoice = true
+                    return;
+                }
+                if (isSecondChoice && firstOpenedDoor != "door1") {
+                    secondChosenDoor = SeconChoice("door1")
+                    CheckWin(secondChosenDoor)
+                    isSecondChoice = false
+                    return;
+                }
+            }
+            else if (event.clientX < 310 && event.clientX > 160 && event.clientY < 300 && event.clientY > 60) {
+                if (isFirstChoice) {
+                    firsChosenDoor = FirstChoice("door2")
+                    isFirstChoice = false
+                    isSecondChoice = true
+                    return;
+                }
+                if (isSecondChoice && firstOpenedDoor != "door2") {
+                    secondChosenDoor = SeconChoice("door2")
+                    CheckWin(secondChosenDoor)
+                    isSecondChoice = false
+                    return;
+                }
+            }
+            else if (event.clientX < 460 && event.clientX > 310 && event.clientY < 300 && event.clientY > 60) {
+                if (isFirstChoice) {
+                    firsChosenDoor = FirstChoice("door3")
+                    isFirstChoice = false
+                    isSecondChoice = true
+                    return;
+                }
+                if (isSecondChoice && firstOpenedDoor != "door3") {
+                    secondChosenDoor = SeconChoice("door3")
+                    CheckWin(secondChosenDoor)
+                    isSecondChoice = false
+                    return;
+                }
+            }
+        }
+
+        function Hide(id) {
+            let x = "door" + doorWithCar
+            if (id == x) {
+                document.getElementById(id).src = "Photos/car.png";
+            }
+            else {
+                document.getElementById(id).src = "Photos/goat.png";
+            }
+        }
+
+        function Show(id) {
+            document.getElementById(id).src = "Photos/door.png";
+        }
+
+        function Replay() {
+            CreateGame()
+        }
+
+        function UpdateStats() {
+            let x = getStorage().changeWin * 100 / (getStorage().changeWin + getStorage().changeLose);
+            if(!isNaN(x))
+                document.getElementById("changeWin").innerText = getStorage().changeWin + "  (" + x.toFixed(2) + " %)"
+            else
+                document.getElementById("changeWin").innerText = getStorage().changeWin + "  (" +0 + " %)"
+            x = getStorage().changeLose * 100 / (getStorage().changeWin + getStorage().changeLose);
+            if(!isNaN(x))
+                document.getElementById("changeLose").innerText = getStorage().changeLose + "  (" + x.toFixed(2) + " %)"
+            else
+                document.getElementById("changeLose").innerText = getStorage().changeLose + "  (" +0 + " %)"
+            x = getStorage().notchangeWin * 100 / (getStorage().notchangeWin + getStorage().notchangeLose);
+            if(!isNaN(x))
+                document.getElementById("notchangeWin").innerText = getStorage().notchangeWin + "  (" + x.toFixed(2) + " %)"
+            else
+                document.getElementById("notchangeWin").innerText = getStorage().notchangeWin + "  (" +0 + " %)"
+            x = getStorage().notchangeLose * 100 / (getStorage().notchangeWin + getStorage().notchangeLose);
+            if(!isNaN(x))
+                document.getElementById("notchangeLose").innerText = getStorage().notchangeLose + "  (" + x.toFixed(2) + " %)"
+            else
+                document.getElementById("notchangeLose").innerText = getStorage().notchangeLose + "  (" +0 + " %)"
+        }
+
+        document.addEventListener("click", getMouseClickedPosition);
+
+
+        CreateGame()
+
+
+    </script>
+</body>
