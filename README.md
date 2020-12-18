@@ -26,4 +26,4 @@
 
 ### Project
 
-* [Project](mertiq.github.io/Advanced-Programming/PROJE)
+* [Project](https://mertiq.github.io/Advanced-Programming/PROJE)
