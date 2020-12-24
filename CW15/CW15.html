@@ -164,7 +164,7 @@ function showProfile() {
 
 function removeFile(fileId)
 {
-  gapi.client.drive.files.delete(fileId)
+  gapi.client.drive.files.delete({fileId})
   .then(execute, error)
 }
 
