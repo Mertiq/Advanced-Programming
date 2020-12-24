@@ -18,6 +18,15 @@
         overflow-x: auto;
         line-height: 1.5;
     }
+    b{
+      cursor: pointer;
+      color: red;
+      padding: 3px;
+      border: 1px solid;
+    }
+    u{
+      cursor: pointer;
+    }
   </style>
 
 </head>
@@ -98,12 +107,15 @@ function report(response) {
     let a = f.map(fileToString)
     out.innerHTML = a.join('\n'); console.log(f)
     files = f.map(x => x.id+' '+x.name)
+    data.innerText = ''
 }
 function fileToString(x) {
     let [d, h, m] = x.modifiedTime.split(/[T:]/)
     let s = x.size.padStart(9) //padding with blanks
-    let a = '<a href='+x.webViewLink+' target=drive>'+x.name+'</a>'
-    return d+' '+h+':'+m+' '+s+'  '+a
+    //let a = '<a href='+x.webViewLink+' target=drive>'+x.name+'</a>'
+    let b = '<b id= ' + x.id +'>x</b>'
+    let u = '<u id='+x.id+'>'+x.name+'</u>'
+    return d+' '+h+':'+m+ ' ' +b+ ' ' +u+' '+s+'  '+a
 }
 function isText(f) {
     console.assert(f instanceof File);
@@ -146,15 +158,37 @@ function showProfile() {
     image.src = p.getImageUrl()
     user.innerText = p.getEmail()
 }
+
+
+
+function removeFile(fileId)
+{
+  gapi.client.drive.files.delete(fileId)
+  .then(execute, error)
+}
+
+function displayFile(fileId)
+{
+  gapi.client.drive.files.get({fileId, alt:"media"})
+  .then(r=> data.innerText  = r.body, error)
+  
+}
 const reader = new FileReader(),
-  apiKey = 'AIzaSyBaftwIrh8fq3254xMwzSXgjYld21KKFt4',
-  clientId = "631199179294-tr1vchk84eg7vof0e4c88irv63fq64vk.apps.googleusercontent.com",
+  apiKey = 'AIzaSyA4mehlGlaf2sGoCettnAX6OSeGr7b-pY4',
+  clientId = "359356326616-4bli5p6sgs99ptdm98ft66c25b7qfgb2.apps.googleusercontent.com",
   scope = 'https://www.googleapis.com/auth/drive.file'  //readonly'
 async function init() {
     await gapi.auth2.init({ apiKey, clientId, scope })
     if (currentUser().getId()) try {
       showFiles()
     } catch (e) { error(e) }  
+    out.onclick = (e) => {
+        let t = e.target
+        if (!t || !t.id) return
+        if (t.tagName == 'B') 
+            removeFile(t.id)
+        else displayFile(t.id)
+    }
 }
 const ORIGIN = "https://mertiq.github.io"
 if (location.host.includes('github') && location.origin != ORIGIN)
