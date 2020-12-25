@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body{
+        body {
             width: 400px;
             height: 800px;
         }
-        
-        .all{
+
+        .all {
             width: 400px;
             height: 800px;
             background-color: #ffd400;
@@ -43,44 +42,51 @@
         }
 
         .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 400px; /* Full width */
-        height: 600px; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 400px;
+            /* Full width */
+            height: 600px;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
         }
 
         /* Modal Content */
         .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
         }
 
         /* The Close Button */
         .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
         }
 
         .close:hover,
         .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
         }
-
-        
     </style>
 
 </head>
@@ -161,50 +167,52 @@
             </table>
 
             <br>
-            <button style="width: 115px;cursor:pointer; border:none;border-radius: 30%;" 
-            onclick="window.open('https://en.wikipedia.org/wiki/Monty_Hall_problem', '_blank');">
-               <span>What's Monty Hall?</span>
+            <button style="width: 115px;cursor:pointer; border:none;border-radius: 30%;"
+                onclick="window.open('https://en.wikipedia.org/wiki/Monty_Hall_problem', '_blank');">
+                <span>What's Monty Hall?</span>
             </button>
 
             <button style="width: 115px; height: 50px;  cursor:pointer; border:none;"
-            onclick="window.open('https://play.google.com/store/apps/details?id=com.mertiq.MontyHallProblem', '_blank');">
+                onclick="window.open('https://play.google.com/store/apps/details?id=com.mertiq.MontyHallProblem', '_blank');">
                 <span></span>
                 <i class="fab fa-google-play"></i>
-             </button>
-            
+            </button>
+
             <button id="htp" style="width: 115px; cursor:pointer; border:none; border-radius: 30%;">
                 <span>How to Play</span>
-             </button>
+            </button>
 
             <!-- The Modal -->
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Suppose you are in a game and you have the right to choose one of the three doors. 
-                    Behind one of the doors is a carriage and behind the others there are goats. 
-                    One of the doors, let's say you choose 1st and the game who knows what's behind the doors, let's say one of the other doors, with the goat behind it, 3rd. 
-                    Then you will have the right to change your choice. Is changing your choice to your advantage or disadvantage?
-                    To find out, play the game and check the statistics.</p>
+                    <span class="close">&times;</span>
+                    <p>Suppose you are in a game and you have the right to choose one of the three doors.
+                        Behind one of the doors is a carriage and behind the others there are goats.
+                        One of the doors, let's say you choose 1st and the game who knows what's behind the doors, let's
+                        say one of the other doors, with the goat behind it, 3rd.
+                        Then you will have the right to change your choice. Is changing your choice to your advantage or
+                        disadvantage?
+                        To find out, play the game and check the statistics.</p>
                 </div>
-            
+
             </div>
-             
+
         </div>
     </div>
 
     <script>
 
-        window.onclick = function(event) {
-        if (event.target ==  document.getElementById("myModal")) {
-            document.getElementById("myModal").style.display = "none";
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+            }
         }
-        }
-        document.getElementById("htp").onclick = function() {
+        document.getElementById("htp").onclick = function () {
             document.getElementById("myModal").style.display = "block";
         }
-        document.getElementsByClassName("close")[0].onclick = function() {
+        document.getElementsByClassName("close")[0].onclick = function () {
             document.getElementById("myModal").style.display = "none";
         }
 
@@ -295,65 +303,68 @@
         }
         let speed
         function Simulate() {
-            
+
             let ischange = document.getElementById("changeornot").value
             console.log(ischange);
-            
-                var doors = ["door1", "door2", "door3"];
-                let x
-                let index
-                let c = 0
-                setTimeout(function() {
-                    CreateGame()
-                    x = Math.floor(Math.random() * 3) + 1;
-                },speed* 1);
-                setTimeout(function() {
-                    firsChosenDoor = FirstChoice("door" + x)
-                    console.log("firsChosenDoor : ", firsChosenDoor);
-                    index = doors.indexOf("door" + x)
+
+            var doors = ["door1", "door2", "door3"];
+            let x
+            let index
+            let c = 0
+            setTimeout(function () {
+                CreateGame()
+                x = Math.floor(Math.random() * 3) + 1;
+            }, speed * 1);
+            setTimeout(function () {
+                firsChosenDoor = FirstChoice("door" + x)
+                console.log("firsChosenDoor : ", firsChosenDoor);
+                index = doors.indexOf("door" + x)
+                doors.splice(index, 1);
+                console.log("firstOpenedDoor : ", firstOpenedDoor);
+            }, speed * 2);
+            setTimeout(function () {
+                if (ischange == "CHANGE") {
+                    index = doors.indexOf(firstOpenedDoor)
                     doors.splice(index, 1);
-                    console.log("firstOpenedDoor : ", firstOpenedDoor);                    
-                }, speed*2);
-                setTimeout(function() {
-                    if (ischange == "CHANGE") {
-                        index = doors.indexOf(firstOpenedDoor)
-                        doors.splice(index, 1);
-                        secondChosenDoor = SeconChoice(doors[0])
-                        console.log("secondChosenDoor : ", secondChosenDoor);
-                        CheckWin(secondChosenDoor)
-                    }
-                    else {
-                        secondChosenDoor = SeconChoice(doors[0])
-                        console.log("secondChosenDoor : ", secondChosenDoor);
-                        CheckWin(secondChosenDoor)
-                    }
-                }, speed*3);
-            
+                    secondChosenDoor = SeconChoice(doors[0])
+                    console.log("secondChosenDoor : ", secondChosenDoor);
+                    CheckWin(secondChosenDoor)
+                }
+                else {
+                    secondChosenDoor = SeconChoice(doors[0])
+                    console.log("secondChosenDoor : ", secondChosenDoor);
+                    CheckWin(secondChosenDoor)
+                }
+            }, speed * 3);
+
         }
         let simDelay;
-        
-        function i()
-        {
+
+        function i() {
             speed = document.getElementById("speed").value
 
-            if(speed == "speed x1")
-                speed=1000
-            else if(speed == "speed x2")
-                speed=500
-            else if(speed == "speed x1000")
+            if (speed == "speed x1") {
+                document.getElementById("change_or_not_ask").value = "Wait for 3 seconds to get things ready!";
+                speed = 1000
+            }
+            else if (speed == "speed x2") {
+                document.getElementById("change_or_not_ask").value = "Wait for 1 second to get things ready!";
+                speed = 500
+            }
+            else if (speed == "speed x1000") {
+                document.getElementById("change_or_not_ask").value = "Wait for 0.001 seconds to get things ready!";
                 speed = 1
-
-
+            }
             let count = parseInt(document.getElementById("repeatCount").value)
-            simDelay = setInterval(function() {
+            simDelay = setInterval(function () {
                 if (count-- == 0) {
                     clearInterval(simDelay);
-                    return ;
+                    return;
                 }
                 Simulate();
-                },speed* 3);
+            }, speed * 3);
         }
-       
+
 
         function CreateGame() {
             for (var i = 1; i < 4; i++) {
@@ -380,53 +391,53 @@
             if (door == "door1") {
                 if (doorWithCar == 1) {
                     firstOpenedDoor = "door3"
-                    x="third"
+                    x = "third"
                 }
                 else {
                     if (doorWithCar == 2) {
                         firstOpenedDoor = "door3"
-                        x="third"
+                        x = "third"
                     }
                     else {
                         firstOpenedDoor = "door2"
-                        x="second"
+                        x = "second"
                     }
                 }
-                y="first";
+                y = "first";
             }
             if (door == "door2") {
                 if (doorWithCar == 2) {
                     firstOpenedDoor = "door1"
-                        x="first"
+                    x = "first"
                 }
                 else {
                     if (doorWithCar == 1) {
                         firstOpenedDoor = "door3"
-                        x="third"
+                        x = "third"
                     }
                     else {
                         firstOpenedDoor = "door1"
-                        x="first"
+                        x = "first"
                     }
                 }
-                y="second";
+                y = "second";
             }
             if (door == "door3") {
                 if (doorWithCar == 3) {
                     firstOpenedDoor = "door2"
-                        x="second"
+                    x = "second"
                 }
                 else {
                     if (doorWithCar == 1) {
                         firstOpenedDoor = "door2"
-                        x="second"
+                        x = "second"
                     }
                     else {
                         firstOpenedDoor = "door1"
-                        x="first"
+                        x = "first"
                     }
                 }
-                y="third";
+                y = "third";
             }
             Hide(firstOpenedDoor);
             document.getElementById("change_or_not_ask").value = "You choosed " + y + " door so " + x + " door opened. Do you want to change your choice?";
@@ -466,12 +477,12 @@
             }
             UpdateStats()
         }
-       
+
         function getMouseClickedPosition(event) {
             console.log(event.clientX)
             console.log(event.clientY)
-            
-            if (event.clientX < 155 && event.clientX > 35  && event.clientY < 270  && event.clientY > 70) {
+
+            if (event.clientX < 155 && event.clientX > 35 && event.clientY < 270 && event.clientY > 70) {
                 if (isFirstChoice) {
                     firsChosenDoor = FirstChoice("door1")
                     isFirstChoice = false
@@ -485,7 +496,7 @@
                     return;
                 }
             }
-            else if (event.clientX < 275 && event.clientX > 155  && event.clientY < 270  && event.clientY > 70) {
+            else if (event.clientX < 275 && event.clientX > 155 && event.clientY < 270 && event.clientY > 70) {
                 if (isFirstChoice) {
                     firsChosenDoor = FirstChoice("door2")
                     isFirstChoice = false
@@ -499,7 +510,7 @@
                     return;
                 }
             }
-            else if (event.clientX < 400 && event.clientX > 275  && event.clientY < 270  && event.clientY > 70) {
+            else if (event.clientX < 400 && event.clientX > 275 && event.clientY < 270 && event.clientY > 70) {
                 if (isFirstChoice) {
                     firsChosenDoor = FirstChoice("door3")
                     isFirstChoice = false
@@ -534,32 +545,32 @@
         }
 
         function UpdateStats() {
-            
+
             let x = getStorage().changeWin * 100 / (getStorage().changeWin + getStorage().changeLose);
-            if(!isNaN(x))
+            if (!isNaN(x))
                 document.getElementById("changeWin").innerText = getStorage().changeWin + "  (" + x.toFixed(2) + " %)"
             else
-                document.getElementById("changeWin").innerText = getStorage().changeWin + "  (" +0 + " %)"
+                document.getElementById("changeWin").innerText = getStorage().changeWin + "  (" + 0 + " %)"
             x = getStorage().changeLose * 100 / (getStorage().changeWin + getStorage().changeLose);
-            if(!isNaN(x))
+            if (!isNaN(x))
                 document.getElementById("changeLose").innerText = getStorage().changeLose + "  (" + x.toFixed(2) + " %)"
             else
-                document.getElementById("changeLose").innerText = getStorage().changeLose + "  (" +0 + " %)"
+                document.getElementById("changeLose").innerText = getStorage().changeLose + "  (" + 0 + " %)"
             x = getStorage().notchangeWin * 100 / (getStorage().notchangeWin + getStorage().notchangeLose);
-            if(!isNaN(x))
+            if (!isNaN(x))
                 document.getElementById("notchangeWin").innerText = getStorage().notchangeWin + "  (" + x.toFixed(2) + " %)"
             else
-                document.getElementById("notchangeWin").innerText = getStorage().notchangeWin + "  (" +0 + " %)"
+                document.getElementById("notchangeWin").innerText = getStorage().notchangeWin + "  (" + 0 + " %)"
             x = getStorage().notchangeLose * 100 / (getStorage().notchangeWin + getStorage().notchangeLose);
-            if(!isNaN(x))
+            if (!isNaN(x))
                 document.getElementById("notchangeLose").innerText = getStorage().notchangeLose + "  (" + x.toFixed(2) + " %)"
             else
-                document.getElementById("notchangeLose").innerText = getStorage().notchangeLose + "  (" +0 + " %)"
+                document.getElementById("notchangeLose").innerText = getStorage().notchangeLose + "  (" + 0 + " %)"
         }
 
         document.addEventListener("click", getMouseClickedPosition);
 
-        
+
         CreateGame()
 
 
