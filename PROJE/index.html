@@ -2,16 +2,18 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
     <style>
         body {
             width: 400px;
-            height: 800px;
+            height: 700px;
         }
 
         .all {
             width: 400px;
-            height: 800px;
-            background-color: #ffd400;
+            height: 700px;
+            background-color: #D9D9D9;
         }
 
         .doors {
@@ -21,7 +23,7 @@
         .upper {
             margin-top: 10px;
             margin-bottom: 10px;
-            margin-left: 19px;
+            margin-left: 1  px;
         }
 
         .bottom {
@@ -30,6 +32,7 @@
         }
 
         .stats {
+            margin-top: 10px;
             margin-left: 19px;
         }
 
@@ -43,28 +46,18 @@
 
         .modal {
             display: none;
-            /* Hidden by default */
             position: fixed;
-            /* Stay in place */
             z-index: 1;
-            /* Sit on top */
             padding-top: 100px;
-            /* Location of the box */
             left: 0;
             top: 0;
             width: 400px;
-            /* Full width */
             height: 600px;
-            /* Full height */
             overflow: auto;
-            /* Enable scroll if needed */
             background-color: rgb(0, 0, 0);
-            /* Fallback color */
             background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
         }
 
-        /* Modal Content */
         .modal-content {
             background-color: #fefefe;
             margin: auto;
@@ -73,7 +66,6 @@
             width: 80%;
         }
 
-        /* The Close Button */
         .close {
             color: #aaaaaa;
             float: right;
@@ -96,14 +88,14 @@
         <div class="upper">
 
             <input type="number" id="repeatCount" style="width:50px;height:44px;" value=1>
-            <select id="changeornot" style="width:90px;height:50px;" value="change">
+            <select id="changeornot" style="width:113px;height:50px;" value="change">
 
                 <option>CHANGE</option>
 
                 <option>NOT CHANGE</option>
 
             </select>
-            <select id="speed" style="width:90px;height:50px;" value="1">
+            <select id="speed" style="width:100px;height:50px;" value="1">
 
                 <option>speed x1</option>
                 <option>speed x2</option>
@@ -127,7 +119,8 @@
 
 
         <div class="bottom">
-            <input type="text" id="change_or_not_ask" style="width:354px;height:50px;" readonly>
+            <textarea type="text" id="change_or_not_ask" style="width:354px;height:80px;" readonly>
+            </textarea>
         </div>
 
         <div class="bottom">
@@ -172,7 +165,7 @@
                 <span>What's Monty Hall?</span>
             </button>
 
-            <button style="width: 115px; height: 50px;  cursor:pointer; border:none;"
+            <button style="width: 115px; height: 50px;  cursor:pointer; border:none; border-radius: 50%;"
                 onclick="window.open('https://play.google.com/store/apps/details?id=com.mertiq.MontyHallProblem', '_blank');">
                 <span></span>
                 <i class="fab fa-google-play"></i>
@@ -381,66 +374,70 @@
             isFirstChoice = true;
             isSecondChoice = false;
             document.getElementById("winlosetext").value = "";
-            document.getElementById("change_or_not_ask").value = "";
+            document.getElementById("change_or_not_ask").value = "Behind one of these doors there is a car. Behind each of the other two doors there is a goat. Click on the door that you think the car is behind.";
             UpdateStats()
         }
 
         function FirstChoice(door) {
+            let a = [1,2,3]
             let x;
             let y;
+            let z;
             if (door == "door1") {
                 if (doorWithCar == 1) {
                     firstOpenedDoor = "door3"
-                    x = "third"
+                    x = 3
                 }
                 else {
                     if (doorWithCar == 2) {
                         firstOpenedDoor = "door3"
-                        x = "third"
+                        x = 3
                     }
                     else {
                         firstOpenedDoor = "door2"
-                        x = "second"
+                        x = 2
                     }
                 }
-                y = "first";
+                y = 1
             }
             if (door == "door2") {
                 if (doorWithCar == 2) {
                     firstOpenedDoor = "door1"
-                    x = "first"
+                    x = 1
                 }
                 else {
                     if (doorWithCar == 1) {
                         firstOpenedDoor = "door3"
-                        x = "third"
+                        x =3
                     }
                     else {
                         firstOpenedDoor = "door1"
-                        x = "first"
+                        x = 1
                     }
                 }
-                y = "second";
+                y = 2
             }
             if (door == "door3") {
                 if (doorWithCar == 3) {
                     firstOpenedDoor = "door2"
-                    x = "second"
+                    x =2
                 }
                 else {
                     if (doorWithCar == 1) {
                         firstOpenedDoor = "door2"
-                        x = "second"
+                        x = 2
                     }
                     else {
                         firstOpenedDoor = "door1"
-                        x = "first"
+                        x = 1
                     }
                 }
-                y = "third";
+                y =3
             }
             Hide(firstOpenedDoor);
-            document.getElementById("change_or_not_ask").value = "You choosed " + y + " door so " + x + " door opened. Do you want to change your choice?";
+            a.splice(a.indexOf(x), 1);
+            a.splice(a.indexOf(y), 1);
+            document.getElementById("change_or_not_ask").value = "Obviously the car is not behind door " + x + ". But before I open door " + y +", the door you selected, I'm going to let you switch to door " + a +" if you like. Again, click on the door which you think the car is behind.";
             return door;
         }
 
